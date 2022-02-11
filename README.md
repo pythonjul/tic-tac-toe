@@ -21,7 +21,7 @@
 
 - During a class on introduction to computer sciences for teachers, we had as a project to implement a game. Unfortunately, at this point of my studies, I didn't know  IA. So the mechanics of your opponent are hardcoded and basic.
 
-## How to play<a name = "hot_to_play"></a>
+## How to play<a name = "how_to_play"></a>
 
 **Rules of the game:**
 
@@ -40,3 +40,13 @@
 ![screenshot](playing_state.png)
 - Then if you want to play on the left of your opponent, insert `[3 2]` and press Enter. And so on.
 
+## Built With
+
+- Scipy
+
+## Author
+
+**Julien Python**
+
+- [Profile](https://github.com/pythonjul "Julien Python")
+- [Email](mailto:pythonjul@gmail.com?subject=Hello "Hello!")
