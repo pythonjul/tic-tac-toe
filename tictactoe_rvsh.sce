@@ -1,0 +1,153 @@
+function concat=tictactoe_rvsh() //COMPUTER RANDOM VS HUMAN
+
+//but: cette fonction oppose un hôte (réel) à l'ordinateur (jouant bêtement).
+//l'hôte joue des 1, l'ordinateur des 2
+
+
+disp('Règles du jeu : deux joueurs s''affrontent, ils jouent tour à tour et le premier à aligner 3 de ses ''pions'' (haut-bas,gauche-droite,verticale) à gagné. Lorsqu''on choisit une case, elle doit être vide (ie pas encore jouée) et doit être connectée au jeu, ie toucher un ''pion'' sur un de ses cotés direct ou diagonale directe')
+
+
+//on détermine si l'hôte ou l'ordinateur joue le premier
+//rem: J1 et J2 ne sont pas adaptés à la situation (repris du squelette de tictactoe),mais pas important car n'a pas d'influence sur le déroulement du code
+    if rand(1)>=0.5
+        FP='J1'
+        disp('Vous commencez la partie, vous jouez des 1')
+        else
+        FP='J2'
+        disp('L''ordinateur commence la partie, vous jouez des 1')
+    end
+
+
+//On créé notre matrice de jeu, et on initialise le jeu comme étant en cours
+    M=[0]
+    jeu=0
+    
+//On a une boucle qui tourne tant que le jeu est en cours
+    while jeu==0
+
+        //si l'hôte commence
+        if FP=='J1'
+
+            //le modulo nous sert pour savoir à qui c'est de jouer
+            if modulo(coupsjoues(M),2)==0 //si on vérifie cela, c'est à l'hôte de jouer
+                if coupsjoues(M)~=0
+                    Ji='J1'
+                    //cette fois ci, on doit 'agrandir' de 2 lignes et colonnes sur les côtés pour pouvoir effectuer l'algorithme ci-dessous
+                    M=agrandirMx2(M)
+                    //on créé une matrice N afin que l'hôte puisse voir quel coup il a le droit de jouer
+                    N=MtoMij(M)
+                    disp(N)
+
+                    //on demande à l'hôte où il souhaite jouer son coup
+                    B=input('insérer ligne colonne de cette manière ''[ième_ligne jème_colonne]''')
+                    s=B(1,1)
+                    t=B(1,2)
+
+                    [t1,t2]=size(M)
+                    
+                    //Ce sont des checks pour que les règles du jeu soient respectées
+                    if s<t1 && t<t2 && t~=1 && s~=1
+                        
+                        //check si connectée au jeu ou déjà jouée
+                        while (M(s-1,t-1)==0 && M(s-1,t)==0 && M(s-1,t+1)==0 && M(s+1,t+1)==0 && M(s+1,t)==0 && M(s+1,t-1)==0 && M(s,t+1)==0 && M(s,t-1)==0) || M(s,t)~=0
+                            B=input('Erreur, veuillez réinsérer ligne colonne de cette manière ''[ième_ligne jème_colonne]''')
+                            s=B(1,1)
+                            t=B(1,2)
+                        end
+                        
+                    //on ne peut pas être sur l'exterieur car non connecté au jeu, on a ici ce cas spécial car sur le bord
+                    else 
+                        while s==t1 || t==t2 || t==1 || s==1
+                        B=input('Erreur, veuillez réinsérer ligne colonne de cette manière ''[ième_ligne jème_colonne]''')
+                        s=B(1,1)
+                        t=B(1,2)
+                        end
+                    end
+                    
+                    //quand les checks sont passés, on inscrit le coup de l'hôte dans la matrice M
+                    M(B(1,1),B(1,2))=1
+
+                    jeu=checkwin(M,Ji)
+                    if jeu==1
+                        txt=sprintf('%s a gagné',Ji)
+                        break
+                    end
+
+
+                else //cas unique où J1 commence, on le différentie à cause de la taille de la matrice M 1x1, et ajoute indication supplémentaire
+                    Ji='J1'
+                    B=input('insérer ligne colonne de cette manière ''[ième_ligne jème_colonne]'', ie [1 1] pour votre premier choix]')
+                    M(B(1,1),B(1,2))=1
+                end
+
+
+            else //à l'ordi de jouer
+                Ji='J2'
+                //comme dans le tictactoe, ordinateur joue bêtement
+                M=agrandirM(M)
+                M=aleatoire(M,Ji)
+                jeu=checkwin(M,Ji)
+                if jeu==1
+                    txt=sprintf('%s a gagné',Ji)
+                    break
+                end
+            end
+
+
+
+
+    //si l'ordi commence
+    else
+            if modulo(coupsjoues(M),2)==0 //cas ordi à jouer
+                if coupsjoues(M)~=0
+                    Ji='J2'
+                    //comme dans le tictactoe, ordinateur joue bêtement
+                    M=agrandirM(M)
+                    M=aleatoire(M,Ji)
+                    jeu=checkwin(M,Ji)
+                    if jeu==1
+                        txt=sprintf('%s a gagné',Ji)
+                        break
+                    end
+                else 
+                    M=[2]
+                    M=agrandirM(M)
+                    end
+
+            else //comme ci-dessus
+                Ji='J1'
+                    M=agrandirMx2(M)
+                    N=MtoMij(M)
+                    disp(N)
+                    B=input('insérer ligne colonne de cette manière ''[ième_ligne jème_colonne]''')
+                    s=B(1,1)
+                    t=B(1,2)
+                    [t1,t2]=size(M)
+                    if s<t1 && t<t2 && t~=1 && s~=1
+                        while (M(s-1,t-1)==0 && M(s-1,t)==0 && M(s-1,t+1)==0 && M(s+1,t+1)==0 && M(s+1,t)==0 && M(s+1,t-1)==0 && M(s,t+1)==0 && M(s,t-1)==0) || M(s,t)~=0
+                            B=input('Erreur, veuillez réinsérer ligne colonne de cette manière ''[ième_ligne jème_colonne]''')
+                            s=B(1,1)
+                            t=B(1,2)
+                        end
+                    else 
+                        while s==t1 || t==t2 || t==1 || s==1
+                        B=input('Erreur, veuillez réinsérer ligne colonne de cette manière ''[ième_ligne jème_colonne]''')
+                        s=B(1,1)
+                        t=B(1,2)
+                        end
+                    end
+                    M(B(1,1),B(1,2))=1
+                    jeu=checkwin(M,Ji)
+                    if jeu==1
+                        txt=sprintf('%s a gagné',Ji)
+                        break
+                    end
+            end
+            end
+end
+
+disp(txt)
+    
+    concat=M
+
+endfunction
