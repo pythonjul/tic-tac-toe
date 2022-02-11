@@ -37,6 +37,6 @@
 
 - Download all the files and execute them on scipy.
 - Then, execute one of the gaming function, tictactoe_cvsh.sce for example: `tictactoe_cvsh()` in the console and press Enter.
-- inserer image
+![screenshot](playing_state.png)
 - Then if you want to play on the left of your opponent, insert `[3 2]` and press Enter. And so on.
 
